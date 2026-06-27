@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #fff6ef;
+  --title: #221722;
+  --text: #5f5260;
+  --muted: #8e7d8c;
+  --accent: #ff7a95;
+  --accent-strong: #d94f7f;
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --body: 'Manrope', system-ui, sans-serif;
+  color-scheme: light;
+  font-family: var(--body);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 201, 214, 0.65), transparent 32%),
+    radial-gradient(circle at 90% 20%, rgba(168, 239, 230, 0.36), transparent 28%),
+    linear-gradient(180deg, #fffaf6 0%, #fff3ea 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: var(--body);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 201, 214, 0.65), transparent 32%),
+    radial-gradient(circle at 90% 20%, rgba(168, 239, 230, 0.36), transparent 28%),
+    linear-gradient(180deg, #fffaf6 0%, #fff3ea 100%);
+}
