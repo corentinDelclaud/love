@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
   --bg: #fff6ef;
@@ -7,11 +7,45 @@
   --muted: #8e7d8c;
   --accent: #ff7a95;
   --accent-strong: #d94f7f;
+  --accent-light: #ffb3c6;
+  --primary: #6c5ce7;
+  --primary-light: #a29bfe;
+  --secondary: #00cec9;
+  --success: #2c7a4b;
+  --error: #ad2f4d;
+  --warning: #fdcb6e;
   --display: 'Cormorant Garamond', Georgia, serif;
-  --body: 'Manrope', system-ui, sans-serif;
+  --body: 'Inter', 'Manrope', system-ui, sans-serif;
+  
+  /* Modern glassmorphism colors */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: rgba(0, 0, 0, 0.08);
+  
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 999px;
+  
+  /* Transitions */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  
   color-scheme: light;
   font-family: var(--body);
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
   color: var(--text);
   background:
@@ -30,30 +64,39 @@
 
 html {
   min-height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body,
 button,
 input,
-textarea {
+textarea,
+select {
   font-family: var(--body);
 }
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  opacity: 0.9;
 }
 
 img,
@@ -61,15 +104,70 @@ picture,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 #root {
   min-height: 100vh;
 }
 
-body {
-  background:
-    radial-gradient(circle at top left, rgba(255, 201, 214, 0.65), transparent 32%),
-    radial-gradient(circle at 90% 20%, rgba(168, 239, 230, 0.36), transparent 28%),
-    linear-gradient(180deg, #fffaf6 0%, #fff3ea 100%);
+/* Modern scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(142, 125, 140, 0.3);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(142, 125, 140, 0.5);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(255, 122, 149, 0.2);
+  color: var(--title);
+}
+
+/* Focus visible styling */
+:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+/* Smooth animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }

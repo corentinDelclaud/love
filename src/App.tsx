@@ -4,6 +4,7 @@ import './App.css'
 import { InvitePage } from './components/InvitePage'
 import { MailPage } from './components/MailPage'
 import { PlannerPage } from './components/PlannerPage'
+import { DateTimePage } from './components/DateTimePage'
 import { ACTIVITY_OPTIONS, type Activity } from './data/plannerData'
 import {
   formatDateInput,
@@ -27,15 +28,14 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 
 function App() {
   const buttonStageRef = useRef<HTMLDivElement | null>(null)
-  const [view, setView] = useState<'invite' | 'planner' | 'mail'>('invite')
+  const [view, setView] = useState<'invite' | 'datetime' | 'planner' | 'mail'>('invite')
   const [noPosition, setNoPosition] = useState<Point>({ x: 340, y: 120 })
   const [message, setMessage] = useState('')
   const [date, setDate] = useState(() => formatDateInput(getNextFriday()))
   const [time, setTime] = useState('21:00')
-  const [activity, setActivity] = useState<Activity>('restaurant')
+  const [activity, setActivity] = useState<Activity>('Restaurant')
   const [choice, setChoice] = useState('Sushi')
   const [place, setPlace] = useState('Downtown')
-  const [note, setNote] = useState('Dinner first, then a slow walk after.')
   const [mailMessage, setMailMessage] = useState('I already locked the plan. Just hit send and let the date begin.')
   const [recipient, setRecipient] = useState('corentin.delclaud@etu.umontpellier.fr')
   const [isSending, setIsSending] = useState(false)
@@ -62,11 +62,10 @@ function App() {
         `Activity: ${activity}`,
         `Option: ${choice}`,
         `Place: ${place}`,
-        `Plan note: ${note}`,
         '',
-        `Custom message: ${mailMessage}`,
+        mailMessage,
       ].join('\n'),
-    [activity, choice, date, mailMessage, note, place, time],
+    [activity, choice, date, mailMessage, place, time],
   )
 
   useEffect(() => {
@@ -102,7 +101,15 @@ function App() {
 
   const handleYesClick = () => {
     setMessage('Nice. Let’s pick the date together.')
+    setView('datetime')
+  }
+
+  const handleDateTimeNext = () => {
     setView('planner')
+  }
+
+  const handlePlannerBack = () => {
+    setView('datetime')
   }
 
   const handleLockPlan = () => {
@@ -144,26 +151,28 @@ function App() {
           onYesClick={handleYesClick}
           onNoMove={moveNoButton}
         />
+      ) : view === 'datetime' ? (
+        <DateTimePage
+          date={date}
+          time={time}
+          onDateChange={setDate}
+          onTimeChange={setTime}
+          onBack={() => setView('invite')}
+          onNext={handleDateTimeNext}
+        />
       ) : view === 'planner' ? (
         <PlannerPage
           activity={activity}
           activityChoices={activityChoices}
           choice={choice}
-          date={date}
-          note={note}
           place={place}
-          summary={summary}
-          time={time}
-          onBack={() => setView('invite')}
+          onBack={handlePlannerBack}
           onActivityChange={(nextActivity) => {
             setActivity(nextActivity)
             setChoice(ACTIVITY_OPTIONS[nextActivity][0])
           }}
           onChoiceChange={setChoice}
-          onDateChange={setDate}
-          onNoteChange={setNote}
           onPlaceChange={setPlace}
-          onTimeChange={setTime}
           onLockPlan={handleLockPlan}
         />
       ) : (
@@ -172,7 +181,6 @@ function App() {
           choice={choice}
           date={date}
           mailMessage={mailMessage}
-          note={note}
           place={place}
           recipient={recipient}
           summary={summary}

@@ -4,7 +4,6 @@ type MailPageProps = {
   date: string
   isSending: boolean
   mailMessage: string
-  note: string
   recipient: string
   sendError: string
   sendStatus: 'idle' | 'success' | 'error'
@@ -23,7 +22,6 @@ export const MailPage = ({
   date,
   isSending,
   mailMessage,
-  note,
   recipient,
   sendError,
   sendStatus,
@@ -58,7 +56,6 @@ export const MailPage = ({
           <span>{choice}</span>
           <span>{place}</span>
         </div>
-        <p className="subtitle">{note}</p>
       </aside>
 
       <form
