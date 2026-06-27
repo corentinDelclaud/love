@@ -13,6 +13,7 @@ import {
   getNextFriday,
 } from './lib/dateUtils'
 import { sendMail } from './lib/sendMail'
+import { SpeedInsights } from '@vercel/speed-insights/nuxt/runtime'
 
 type Point = {
   x: number
@@ -194,6 +195,7 @@ function App() {
           onMailMessageChange={setMailMessage}
         />
       )}
+      <SpeedInsights />
     </main>
   )
 }

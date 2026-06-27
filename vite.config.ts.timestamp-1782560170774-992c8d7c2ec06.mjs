@@ -5,6 +5,8 @@ var vite_config_default = defineConfig({
   plugins: [react()],
   server: {
     proxy: {
+      host: true, // 👈 Écoute sur 0.0.0.0 (toutes les interfaces réseau)
+      allowedHosts: true,
       "/api": "http://localhost:8787"
     }
   }
