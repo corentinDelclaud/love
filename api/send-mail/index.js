@@ -43,6 +43,13 @@ const sendJson = (response, statusCode, payload) => {
   response.status(statusCode).json(payload);
 };
 
+// For Vercel to recognize this as a serverless function
+export const config = {
+  api: {
+    bodyParser: false, // We handle body parsing manually
+  },
+};
+
 export default async function handler(request, response) {
   // Handle OPTIONS for CORS preflight
   if (request.method === 'OPTIONS') {
@@ -72,15 +79,26 @@ export default async function handler(request, response) {
     }
 
     // Check if SMTP is configured
-    if (!smtpConfigured || !transporter) {
+    if (!smtpConfigured) {
       sendJson(response, 500, { 
         error: 'SMTP configuration is missing. Set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, and MAIL_FROM environment variables.' 
       });
       return;
     }
 
+    // Create transporter (recreate it for each request)
+    const mailTransporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpSecure,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+
     // Send email
-    const info = await transporter.sendMail({
+    const info = await mailTransporter.sendMail({
       from: fromAddress,
       to: recipient,
       subject: subject,
@@ -99,10 +117,3 @@ export default async function handler(request, response) {
     sendJson(response, 500, { error: errorMessage });
   }
 }
-
-// For Vercel to recognize this as a serverless function
-export const config = {
-  api: {
-    bodyParser: false, // We handle body parsing manually
-  },
-};
