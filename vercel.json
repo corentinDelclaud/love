@@ -14,7 +14,7 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist",
-        "installCommand": "npm install",
+        "installCommand": "npm install --ignore-scripts",
         "buildCommand": "npm run build"
       }
     }
