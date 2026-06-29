@@ -15,19 +15,18 @@ type InvitePageProps = {
 
 export const InvitePage = ({
   buttonStageRef,
-  message,
   noPosition,
   onNoMove,
   onYesClick,
 }: InvitePageProps) => (
-  <section className="card hero-card" aria-label="date invitation">
-    <p className="eyebrow">For my favorite person</p>
-    <h1>Will you try a date with me?</h1>
-    <p className="subtitle">One button says yes. The other is a little shy.</p>
+  <section className="card hero-card" aria-label="invitation de rendez-vous">
+    <p className="eyebrow">Pour ma personne préférée😘​💐​</p>
+    <h1>Un petit rendez-vous  ?</h1>
+    <p className="subtitle">Un bouton dit oui. L'autre est un peu timide.</p>
 
-    <div ref={buttonStageRef} className="button-stage" aria-label="Choose your answer">
+    <div ref={buttonStageRef} className="button-stage" aria-label="Choisis ta réponse">
       <button type="button" className="yes-button" onClick={onYesClick}>
-        try a date ?
+        OUI 😍​
       </button>
 
       <button
@@ -42,12 +41,8 @@ export const InvitePage = ({
           top: `${noPosition.y}px`,
         } as CSSProperties}
       >
-        no!
+        Non !😨​
       </button>
     </div>
-
-    <p className="message" aria-live="polite">
-      {message || 'Hover over no! if you dare.'}
-    </p>
   </section>
 )

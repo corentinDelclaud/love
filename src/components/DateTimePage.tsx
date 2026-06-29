@@ -15,39 +15,34 @@ export const DateTimePage = ({
   onBack,
   onNext,
 }: DateTimePageProps) => (
-  <section className="card planner-card" aria-label="date and time picker">
+  <section className="card planner-card" aria-label="sélecteur de date et d'heure">
     <div className="planner-header">
       <div>
-        <p className="eyebrow">Date & Time</p>
-        <h1>Pick when.</h1>
-        <p className="subtitle">Choose the day and time for your date.</p>
+        <p className="eyebrow"> Mon cœur est trop plein de toi pour être jamais à un autre ; je t'aime et je t'aimerai jusqu'au dernier jour de ma vie</p>
+        <h1>Date & Heure</h1>
+        <p className="subtitle">Sélectionnez le jour et l'heure pour votre rendez-vous.</p>
       </div>
       <button type="button" className="back-button" onClick={onBack}>
-        back
+        Retour
       </button>
     </div>
 
     <div className="planner-layout">
       <form className="planner-form">
         <label>
-          <span>Date</span>
+          <span>Date 🗓️​</span>
           <input type="date" value={date} onChange={(event) => onDateChange(event.target.value)} />
         </label>
 
         <label>
-          <span>Hour</span>
+          <span>Heure ⌚​</span>
           <input type="time" value={time} onChange={(event) => onTimeChange(event.target.value)} />
         </label>
       </form>
-
-      <aside className="planner-preview">
-        <p className="eyebrow">Selected</p>
-        <h2>{date} at {time}</h2>
-      </aside>
     </div>
 
     <button type="button" className="primary-action" onClick={onNext}>
-      next
+      Suivant
     </button>
   </section>
 )

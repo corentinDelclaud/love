@@ -97,7 +97,7 @@ const sendViaSmtp = async ({ recipient, subject, body }) => {
 }
 
 createServer(async (request, response) => {
-  if (!request.url?.startsWith('/api/send-mail')) {
+  if (!request.url?.startsWith('/send-mail') && !request.url?.startsWith('/api/send-mail')) {
     sendJson(response, 404, { error: 'Not found' })
     return
   }

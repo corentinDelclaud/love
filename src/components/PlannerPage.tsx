@@ -23,21 +23,21 @@ export const PlannerPage = ({
   onLockPlan,
   onPlaceChange,
 }: PlannerPageProps) => (
-  <section className="card planner-card" aria-label="date planner">
+  <section className="card planner-card" aria-label="planificateur de rendez-vous">
     <div className="planner-header">
       <div>
-        <p className="eyebrow">Activity details</p>
-        <h1>Lock the plan.</h1>
-        <p className="subtitle">Choose the activity and the exact kind of fun.</p>
+        <p className="eyebrow">Détails</p>
+        <h1>Tu veux faire quoi ?</h1>
+        <p className="subtitle">Choisis ce qui te fais plaisir.</p>
       </div>
       <button type="button" className="back-button" onClick={onBack}>
-        back
+        Retour
       </button>
     </div>
 
     <form className="planner-form">
       <label>
-        <span>Activity</span>
+        <span>Activité</span>
         <select
           value={activity}
           onChange={(event) => {
@@ -65,17 +65,17 @@ export const PlannerPage = ({
       </label>
 
       <label className="wide">
-        <span>Place</span>
+        <span>Lieu</span>
         <input
           value={place}
           onChange={(event) => onPlaceChange(event.target.value)}
-          placeholder="Restaurant, park, cinema..."
+          placeholder="Restaurant, parc, cinéma..."
         />
       </label>
     </form>
 
     <button type="button" className="primary-action" onClick={onLockPlan}>
-      lock the plan
+      Verrouiller le plan
     </button>
   </section>
 )

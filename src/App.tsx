@@ -33,10 +33,10 @@ function App() {
   const [message, setMessage] = useState('')
   const [date, setDate] = useState(() => formatDateInput(getNextFriday()))
   const [time, setTime] = useState('21:00')
-  const [activity, setActivity] = useState<Activity>('Restaurant')
-  const [choice, setChoice] = useState('Sushi')
-  const [place, setPlace] = useState('Downtown')
-  const [mailMessage, setMailMessage] = useState('I already locked the plan. Just hit send and let the date begin.')
+  const [activity, setActivity] = useState<Activity>('🍽️ Restaurant')
+  const [choice, setChoice] = useState('🍣 Sushi')
+  const [place, setPlace] = useState('Centre-ville')
+  const [mailMessage, setMailMessage] = useState('J\'ai déjà verrouillé le plan. Il ne reste plus qu\'à envoyer et laisser le rendez-vous commencer.')
   const [recipient, setRecipient] = useState('corentin.delclaud@etu.umontpellier.fr')
   const [isSending, setIsSending] = useState(false)
   const [sendStatus, setSendStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -50,18 +50,18 @@ function App() {
   )
 
   const mailSubject = useMemo(
-    () => `Our date plan: ${formatPrettyDate(date)} at ${formatPrettyTime(time)}`,
+    () => `Notre plan de rendez-vous : ${formatPrettyDate(date)} à ${formatPrettyTime(time)}`,
     [date, time],
   )
 
   const mailBody = useMemo(
     () =>
       [
-        `Date: ${formatPrettyDate(date)}`,
-        `Hour: ${formatPrettyTime(time)}`,
-        `Activity: ${activity}`,
-        `Option: ${choice}`,
-        `Place: ${place}`,
+        `Date : ${formatPrettyDate(date)}`,
+        `Heure : ${formatPrettyTime(time)}`,
+        `Activité : ${activity}`,
+        `Option : ${choice}`,
+        `Lieu : ${place}`,
         '',
         mailMessage,
       ].join('\n'),
@@ -132,7 +132,7 @@ function App() {
       setSendStatus('success')
     } catch (error) {
       setSendStatus('error')
-      setSendError(error instanceof Error ? error.message : 'Unable to send mail')
+      setSendError(error instanceof Error ? error.message : 'Impossible d\'envoyer l\'email')
     } finally {
       setIsSending(false)
     }

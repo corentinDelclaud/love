@@ -40,7 +40,8 @@ const sendJson = (response, statusCode, payload) => {
   response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  response.status(statusCode).json(payload);
+  response.statusCode = statusCode;
+  response.end(JSON.stringify(payload));
 };
 
 // For Vercel to recognize this as a serverless function
