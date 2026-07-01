@@ -9,12 +9,14 @@ type InvitePageProps = {
   buttonStageRef: RefObject<HTMLDivElement | null>
   message: string
   noPosition: Point
+  onOpenBattle: () => void
   onNoMove: () => void
   onYesClick: () => void
 }
 
 export const InvitePage = ({
   buttonStageRef,
+  onOpenBattle,
   noPosition,
   onNoMove,
   onYesClick,
@@ -44,5 +46,9 @@ export const InvitePage = ({
         Non !😨​
       </button>
     </div>
+
+    <button type="button" className="battle-link-button" onClick={onOpenBattle}>
+      Play Bataille Corse
+    </button>
   </section>
 )

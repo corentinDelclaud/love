@@ -5,6 +5,7 @@ import { InvitePage } from './components/InvitePage'
 import { MailPage } from './components/MailPage'
 import { PlannerPage } from './components/PlannerPage'
 import { DateTimePage } from './components/DateTimePage'
+import { BatailleCorsePage } from './components/BatailleCorsePage'
 import { ACTIVITY_OPTIONS, type Activity } from './data/plannerData'
 import {
   formatDateInput,
@@ -28,7 +29,16 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 
 function App() {
   const buttonStageRef = useRef<HTMLDivElement | null>(null)
-  const [view, setView] = useState<'invite' | 'datetime' | 'planner' | 'mail'>('invite')
+  const [view, setView] = useState<'invite' | 'datetime' | 'planner' | 'mail' | 'battle'>('invite')
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const storedTheme = window.localStorage.getItem('love.theme')
+
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
   const [noPosition, setNoPosition] = useState<Point>({ x: 340, y: 120 })
   const [message, setMessage] = useState('')
   const [date, setDate] = useState(() => formatDateInput(getNextFriday()))
@@ -138,8 +148,20 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    window.localStorage.setItem('love.theme', theme)
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'))
+  }
+
   return (
     <main className={`landing ${view !== 'invite' ? 'planner-mode' : ''}`}>
+      <button type="button" className="theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
+        {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+      </button>
       <div className="soft-glow soft-glow-left" />
       <div className="soft-glow soft-glow-right" />
 
@@ -148,9 +170,12 @@ function App() {
           buttonStageRef={buttonStageRef}
           message={message}
           noPosition={noPosition}
+          onOpenBattle={() => setView('battle')}
           onYesClick={handleYesClick}
           onNoMove={moveNoButton}
         />
+      ) : view === 'battle' ? (
+        <BatailleCorsePage onBack={() => setView('invite')} />
       ) : view === 'datetime' ? (
         <DateTimePage
           date={date}
