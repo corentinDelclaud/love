@@ -1,8 +1,9 @@
-import { ACTIVITY_OPTIONS, type Activity } from '../data/plannerData'
+import { ACTIVITY_OPTIONS, type Activity, type ActivityOption } from '../data/plannerData'
+import { CustomSelect } from './CustomSelect'
 
 type PlannerPageProps = {
   activity: Activity
-  activityChoices: readonly string[]
+  activityChoices: readonly ActivityOption[]
   choice: string
   place: string
   onActivityChange: (activity: Activity) => void
@@ -36,40 +37,36 @@ export const PlannerPage = ({
     </div>
 
     <form className="planner-form">
-      <label>
-        <span>Activité</span>
-        <select
-          value={activity}
-          onChange={(event) => {
-            const nextActivity = event.target.value as Activity
-            onActivityChange(nextActivity)
-          }}
-        >
-          {Object.keys(ACTIVITY_OPTIONS).map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
+      <CustomSelect
+        label="Activité"
+        value={activity}
+        onChange={(nextActivity) => onActivityChange(nextActivity as Activity)}
+        options={Object.keys(ACTIVITY_OPTIONS).map((key) => ({
+          value: key,
+          label: key,
+        }))}
+      />
 
-      <label>
-        <span>Option</span>
-        <select value={choice} onChange={(event) => onChoiceChange(event.target.value)}>
-          {activityChoices.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
+      <CustomSelect
+        label="Option"
+        value={choice}
+        onChange={(selectedName) => {
+          const selectedOption = activityChoices.find(opt => opt.name === selectedName)
+          onChoiceChange(selectedName)
+          onPlaceChange(selectedOption?.defaultPlace || '')
+        }}
+        options={activityChoices.map((option) => ({
+          value: option.name,
+          label: option.name,
+        }))}
+      />
 
       <label className="wide">
         <span>Lieu</span>
         <input
           value={place}
           onChange={(event) => onPlaceChange(event.target.value)}
-          placeholder="Restaurant, parc, cinéma..."
+          placeholder="Adresse ou nom du lieu"
         />
       </label>
     </form>

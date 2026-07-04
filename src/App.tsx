@@ -44,8 +44,8 @@ function App() {
   const [date, setDate] = useState(() => formatDateInput(getNextFriday()))
   const [time, setTime] = useState('21:00')
   const [activity, setActivity] = useState<Activity>('🍽️ Restaurant')
-  const [choice, setChoice] = useState('🍣 Sushi')
-  const [place, setPlace] = useState('Centre-ville')
+  const [choice, setChoice] = useState<string>('🍣 Sushi')
+  const [place, setPlace] = useState('King Long')
   const [mailMessage, setMailMessage] = useState('J\'ai déjà verrouillé le plan. Il ne reste plus qu\'à envoyer et laisser le rendez-vous commencer.')
   const [recipient, setRecipient] = useState('corentin.delclaud@etu.umontpellier.fr')
   const [isSending, setIsSending] = useState(false)
@@ -53,6 +53,14 @@ function App() {
   const [sendError, setSendError] = useState('')
 
   const activityChoices = useMemo(() => ACTIVITY_OPTIONS[activity], [activity])
+
+  // Remplit automatiquement le lieu avec le defaultPlace quand choice change
+  useEffect(() => {
+    const currentOption = activityChoices.find((opt) => opt.name === choice)
+    if (currentOption?.defaultPlace && place === '') {
+      setPlace(currentOption.defaultPlace)
+    }
+  }, [choice, activity, place, activityChoices])
 
   const summary = useMemo(
     () => `${formatPrettyDate(date)} • ${formatPrettyTime(time)} • ${activity} • ${choice} • ${place}`,
@@ -194,7 +202,7 @@ function App() {
           onBack={handlePlannerBack}
           onActivityChange={(nextActivity) => {
             setActivity(nextActivity)
-            setChoice(ACTIVITY_OPTIONS[nextActivity][0])
+            setChoice(ACTIVITY_OPTIONS[nextActivity][0].name)
           }}
           onChoiceChange={setChoice}
           onPlaceChange={setPlace}
