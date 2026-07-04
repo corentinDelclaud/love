@@ -51,7 +51,7 @@ export const PlannerPage = ({
         label="Option"
         value={choice}
         onChange={(selectedName) => {
-          const selectedOption = activityChoices.find(opt => opt.name === selectedName)
+          const selectedOption = activityChoices.find(opt => opt.name === selectedName) as ActivityOption | undefined
           onChoiceChange(selectedName)
           onPlaceChange(selectedOption?.defaultPlace || '')
         }}

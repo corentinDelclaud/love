@@ -6,7 +6,7 @@ import { MailPage } from './components/MailPage'
 import { PlannerPage } from './components/PlannerPage'
 import { DateTimePage } from './components/DateTimePage'
 import { BatailleCorsePage } from './components/BatailleCorsePage'
-import { ACTIVITY_OPTIONS, type Activity } from './data/plannerData'
+import { ACTIVITY_OPTIONS, type Activity, type ActivityOption } from './data/plannerData'
 import {
   formatDateInput,
   formatPrettyDate,
@@ -56,7 +56,7 @@ function App() {
 
   // Remplit automatiquement le lieu avec le defaultPlace quand choice change
   useEffect(() => {
-    const currentOption = activityChoices.find((opt) => opt.name === choice)
+    const currentOption = activityChoices.find((opt) => opt.name === choice) as ActivityOption | undefined
     if (currentOption?.defaultPlace && place === '') {
       setPlace(currentOption.defaultPlace)
     }

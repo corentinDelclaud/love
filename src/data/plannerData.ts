@@ -43,4 +43,7 @@ export const ACTIVITY_OPTIONS = {
 } as const
 
 export type Activity = keyof typeof ACTIVITY_OPTIONS
-export type ActivityOption = typeof ACTIVITY_OPTIONS[keyof typeof ACTIVITY_OPTIONS][number]
+export type ActivityOption = {
+  name: string
+  defaultPlace?: string
+}
