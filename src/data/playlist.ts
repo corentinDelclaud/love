@@ -7,42 +7,42 @@ export type PlaylistTrack = {
 export const playlist: PlaylistTrack[] = [
   {
     id: 'william-sheller-un-homme-heureux',
-    title: 'William Sheller - Un Homme Heureux',
+    title: 'Un Homme Heureux - William Sheller',
     youtubeId: 'R1wAXsbVlHE',
   },
   {
     id: 'michel-berger-le-paradis-blanc',
-    title: 'Michel Berger - Le Paradis Blanc',
+    title: 'Le Paradis Blanc - Michel Berger',
     youtubeId: 'Z2OawuAcIF4',
   },
   {
     id: 'pomme-la-lavande',
-    title: 'Pomme - La lavande',
+    title: 'La lavande - Pomme',
     youtubeId: 'yfRKk1JoLdo',
   },
   {
     id: 'led-zeppelin-stairway-to-heaven',
-    title: 'Led Zeppelin - Stairway to Heaven',
+    title: 'Stairway to Heaven - Led Zeppelin',
     youtubeId: 'X791IzOwt3Q',
   },
   {
     id: 'RADWIMPS-date',
-    title: 'RADWIMPS - Date',
+    title: 'Date - RADWIMPS',
     youtubeId: 'FtMhJH_rui4',
   },
   {
     id: 'yann-tiersen-la-valse-damelie',
-    title: 'Yann Tiersen - La valse d\'Amélie',
+    title: 'La valse d\'Amélie - Yann Tiersen',
     youtubeId: '07xTvC5a9YQ',
   },
   {
     id: 'yann-tiersen-la-valse-damelie-piano-version',
-    title: 'Yann Tiersen - La valse d\'Amélie (Version piano)',
+    title: 'La valse d\'Amélie (Version piano) - Yann Tiersen',
     youtubeId: 'o3OcLhAs8wQ',
   },
   {
     id: 'yann-tiersen-comptine-dun-autre-ete-lapres-midi',
-    title: 'Yann Tiersen - Comptine d\'un autre été, l\'après-midi',
+    title: 'Comptine d\'un autre été, l\'après-midi - Yann Tiersen',
     youtubeId: 'znfYwABeSZ0',
   },
 ]

@@ -43,6 +43,10 @@ type WindowWithYouTube = Window & {
   onYouTubeIframeAPIReady?: () => void
 }
 
+type MusicBoxProps = {
+  mode?: 'floating' | 'dock'
+}
+
 let youtubeApiPromise: Promise<YouTubeApi> | null = null
 
 const loadYoutubeApi = () => {
@@ -82,7 +86,8 @@ const loadYoutubeApi = () => {
   return youtubeApiPromise
 }
 
-export function MusicBox() {
+export function MusicBox({ mode = 'floating' }: MusicBoxProps) {
+  const isDocked = mode === 'dock'
   const playerContainerRef = useRef<HTMLDivElement | null>(null)
   const playerRef = useRef<YouTubePlayer | null>(null)
   const currentIndexRef = useRef(0)
@@ -92,6 +97,7 @@ export function MusicBox() {
   const [isReady, setIsReady] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [volume, setVolume] = useState(20)
+  const [isCompactView, setIsCompactView] = useState(() => !isDocked && window.matchMedia('(max-width: 640px)').matches)
   const currentTrack = useMemo(() => playlist[currentIndex], [currentIndex])
 
   useEffect(() => {
@@ -105,6 +111,10 @@ export function MusicBox() {
   useEffect(() => {
     volumeRef.current = volume
   }, [volume])
+
+  useEffect(() => {
+    setIsCompactView(!isDocked && window.matchMedia('(max-width: 640px)').matches)
+  }, [isDocked])
 
   const syncTrack = (nextIndex: number, autoplay: boolean) => {
     const normalizedIndex = ((nextIndex % playlist.length) + playlist.length) % playlist.length
@@ -258,64 +268,112 @@ export function MusicBox() {
   }, [])
 
   return (
-    <section className="music-box" aria-label="Music Box">
+    <section className={`music-box ${mode === 'dock' ? 'music-box--dock' : ''} ${isCompactView ? 'music-box--compact' : 'music-box--full'}`} aria-label="Music Box">
       <div className="music-box__glass">
         <div className="music-box__header">
           <div>
             <p className="music-box__eyebrow">Now playing</p>
             <h2 className="music-box__title">Music Box</h2>
           </div>
-          <span className={`music-box__status ${isPlaying ? 'is-playing' : ''}`}>
-            {isReady ? (isPlaying ? 'Playing' : 'Paused') : 'Loading'}
-          </span>
-        </div>
-
-        <div className="music-box__track">
-          <span className="music-box__track-label">Track</span>
-          <strong>{currentTrack.title}</strong>
-          <small>
-            {currentIndex + 1}/{playlist.length}
-          </small>
-        </div>
-
-        <label className="music-box__select-group">
-          <span>Choose a track</span>
-          <select value={currentTrack.id} onChange={handleTrackChange} aria-label="Choose a track">
-            {playlist.map((track) => (
-              <option key={track.id} value={track.id}>
-                {track.title}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <div className="music-box__controls" aria-label="Playback controls">
-          <button type="button" className="music-box__button music-box__button--ghost" onClick={handlePrevious} disabled={!isReady} aria-label="Previous track">
-            <span aria-hidden="true">‹</span>
-          </button>
-          <button type="button" className="music-box__button music-box__button--primary" onClick={handlePlayPause} disabled={!isReady} aria-label={isPlaying ? 'Pause' : 'Play'}>
-            <span aria-hidden="true">{isPlaying ? '❚❚' : '▶'}</span>
-          </button>
-          <button type="button" className="music-box__button music-box__button--ghost" onClick={handleNext} disabled={!isReady} aria-label="Next track">
-            <span aria-hidden="true">›</span>
-          </button>
-        </div>
-
-        <label className="music-box__volume">
-          <div>
-            <span>Volume</span>
-            <strong>{volume}%</strong>
+          <div className="music-box__header-actions">
+            <span className={`music-box__status ${isPlaying ? 'is-playing' : ''}`}>
+              {isReady ? (isPlaying ? 'Playing' : 'Paused') : 'Loading'}
+            </span>
+            <button
+              type="button"
+              className="music-box__icon-button"
+              onClick={() => setIsCompactView((current) => !current)}
+              aria-label={isCompactView ? 'Expand player' : 'Compact player'}
+              aria-pressed={isCompactView}
+            >
+              <span aria-hidden="true">{isCompactView ? '↔' : '↕'}</span>
+            </button>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-            value={volume}
-            onChange={(event) => handleVolumeChange(Number(event.target.value))}
-            aria-label="Volume"
-          />
-        </label>
+        </div>
+
+        {isCompactView ? (
+          <div className="music-box__compact-summary">
+            <div className="music-box__track music-box__track--compact">
+              <span className="music-box__track-label">Track</span>
+              <strong>{currentTrack.title}</strong>
+              <small>
+                {currentIndex + 1}/{playlist.length}
+              </small>
+            </div>
+
+            <label className="music-box__volume music-box__volume--inline">
+              <div>
+                <span>Vol</span>
+                <strong>{volume}%</strong>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value={volume}
+                onChange={(event) => handleVolumeChange(Number(event.target.value))}
+                aria-label="Volume"
+              />
+            </label>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="music-box__track"
+            onClick={() => setIsCompactView(true)}
+            aria-label="Compact player"
+          >
+            <span className="music-box__track-label">Track</span>
+            <strong>{currentTrack.title}</strong>
+            <small>
+              {currentIndex + 1}/{playlist.length}
+            </small>
+          </button>
+        )}
+
+        <div className={`music-box__body ${isCompactView ? 'music-box__body--compact' : 'music-box__body--full'}`}>
+          <label className="music-box__select-group">
+            <span>Choose a track</span>
+            <select value={currentTrack.id} onChange={handleTrackChange} aria-label="Choose a track">
+              {playlist.map((track) => (
+                <option key={track.id} value={track.id}>
+                  {track.title}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <div className="music-box__controls" aria-label="Playback controls" id="music-box-controls">
+            <button type="button" className="music-box__button music-box__button--ghost" onClick={handlePrevious} disabled={!isReady} aria-label="Previous track">
+              <span aria-hidden="true">‹</span>
+            </button>
+            <button type="button" className="music-box__button music-box__button--primary" onClick={handlePlayPause} disabled={!isReady} aria-label={isPlaying ? 'Pause' : 'Play'}>
+              <span aria-hidden="true">{isPlaying ? '❚❚' : '▶'}</span>
+            </button>
+            <button type="button" className="music-box__button music-box__button--ghost" onClick={handleNext} disabled={!isReady} aria-label="Next track">
+              <span aria-hidden="true">›</span>
+            </button>
+          </div>
+
+          {!isCompactView ? (
+            <label className="music-box__volume">
+              <div>
+                <span>Volume</span>
+                <strong>{volume}%</strong>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value={volume}
+                onChange={(event) => handleVolumeChange(Number(event.target.value))}
+                aria-label="Volume"
+              />
+            </label>
+          ) : null}
+        </div>
       </div>
 
       <div ref={playerContainerRef} className="music-box__player" aria-hidden="true" />

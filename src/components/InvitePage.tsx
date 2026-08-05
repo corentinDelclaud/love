@@ -50,8 +50,14 @@ export const InvitePage = ({
     <button type="button" className="battle-link-button" onClick={onOpenBattle}>
       Play Bataille Corse 
     </button>
+
+    
   
-  <h6>Alors c'était un peu plus simple donc j'ai fait plus propre et normalement c'est mieux que le reste parce que c'est pour toi quand même</h6>
+  <h6>Alors c'était un peu plus simple donc j'ai fait plus propre et normalement c'est mieux que le reste parce que c'est pour toi quand même mais j'ai pas fini pour le moment</h6>
+
+  <button type="button">
+      Album photo pas dev
+    </button>
   </section>
 
   

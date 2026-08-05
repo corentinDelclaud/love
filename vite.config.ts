@@ -28,11 +28,13 @@ export default defineConfig({
         configure: (proxy) => {
           proxy.on('error', (err, _req, res) => {
             console.log('Proxy error:', err);
-            if ('writeHead' in res) {
-              res.writeHead(500, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify({ error: 'API server not available' }));
+            const response = res as { writeHead?: (statusCode: number, headers: Record<string, string>) => void; end?: (body?: string) => void } | undefined;
+
+            if (response?.writeHead) {
+              response.writeHead(500, { 'Content-Type': 'application/json' });
+              response.end?.(JSON.stringify({ error: 'API server not available' }));
             } else {
-              res.end();
+              response?.end?.();
             }
           });
         },
