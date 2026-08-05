@@ -38,11 +38,11 @@ export const playlist: PlaylistTrack[] = [
   {
     id: 'yann-tiersen-la-valse-damelie-piano-version',
     title: 'Yann Tiersen - La valse d\'Amélie (Version piano)',
-    youtubeId: '07xTvC5a9YQ',
+    youtubeId: 'o3OcLhAs8wQ',
   },
   {
     id: 'yann-tiersen-comptine-dun-autre-ete-lapres-midi',
     title: 'Yann Tiersen - Comptine d\'un autre été, l\'après-midi',
-    youtubeId: '07xTvC5a9YQ',
+    youtubeId: 'znfYwABeSZ0',
   },
 ]

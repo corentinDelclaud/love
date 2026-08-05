@@ -87,11 +87,11 @@ export function MusicBox() {
   const playerRef = useRef<YouTubePlayer | null>(null)
   const currentIndexRef = useRef(0)
   const isPlayingRef = useRef(false)
-  const volumeRef = useRef(70)
+  const volumeRef = useRef(20)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isReady, setIsReady] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [volume, setVolume] = useState(70)
+  const [volume, setVolume] = useState(20)
   const currentTrack = useMemo(() => playlist[currentIndex], [currentIndex])
 
   useEffect(() => {
