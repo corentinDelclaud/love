@@ -6,6 +6,7 @@ import { MailPage } from './components/MailPage'
 import { PlannerPage } from './components/PlannerPage'
 import { DateTimePage } from './components/DateTimePage'
 import { BatailleCorsePage } from './components/BatailleCorsePage'
+import { MusicBox } from './components/MusicBox'
 import { ACTIVITY_OPTIONS, type Activity, type ActivityOption } from './data/plannerData'
 import {
   formatDateInput,
@@ -227,6 +228,8 @@ function App() {
           onMailMessageChange={setMailMessage}
         />
       )}
+
+      <MusicBox />
     </main>
   )
 }

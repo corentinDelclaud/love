@@ -70,7 +70,7 @@ export const MailPage = ({
             type="email"
             value={recipient}
             onChange={(event) => onRecipientChange(event.target.value)}
-            placeholder="corentin.delclaud@etu.umontpellier.fr"
+            placeholder="corentinplay40@gmail.com"
             autoComplete="email"
             required
           />

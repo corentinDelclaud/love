@@ -46,9 +46,9 @@ export const InvitePage = ({
         Non !😨​
       </button>
     </div>
-
+    <div> en cours de developpement</div>
     <button type="button" className="battle-link-button" onClick={onOpenBattle}>
-      Play Bataille Corse
+      Play Bataille Corse 
     </button>
   </section>
 )
